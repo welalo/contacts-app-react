@@ -1,15 +1,20 @@
+import { useContext } from 'react';
 import './ContactList.css'
 import ContactCard from '../ContactCard/ContactCard';
+import { ContactsContext } from '../../contexts/Contacts';
 
-const ContactList = ({contacts, valueSearch}) => {
+const ContactList = () => {
   
+
+  const {contacts, valueSearch} = useContext(ContactsContext)
+
   const productsFiltered = contacts.filter(contact => {
-    return contact.nombre.toLowerCase().includes(valueSearch.toLowerCase())
+    return contact.name.toLowerCase().includes(valueSearch.toLowerCase())
   });
   
   return (
-    productsFiltered.map((contact) => 
-      <ContactCard key={contact.id} contact = {contact}/> 
+    productsFiltered.map((contact, index) => 
+      <ContactCard key={index} contact = {contact}/> 
     )
   )
 }

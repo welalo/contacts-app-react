@@ -1,30 +1,31 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import './AddContact.css'
 import AddContactForm from '../AddContactForm/AddContactForm';
 
-const AddContact = ({contacts, setContacts}) => {
+import { ContactsContext } from '../../contexts/Contacts';
+
+
+const AddContact = () => {
+  
+  const {addContact} = useContext(ContactsContext);
+  console.log(addContact)
 
   const [newContactName, setNewContactName] = useState('')
   const [newContactEmail, setNewContactEmail] = useState('')
-  const [newContactTelefono, setNewContactTelefono] = useState('')
+  const [newContactPhone, setNewContactPhone] = useState('')
 
-  const addContact = () => {
-    setContacts([...contacts, {
-      id: contacts.length +1,
-      nombre: newContactName,
-      email: newContactEmail,
-      telefono: newContactTelefono
-    }])
-
+  const add = () => {
+    addContact(newContactName, newContactEmail, newContactPhone)
+ 
     setNewContactName('')
     setNewContactEmail('')
-    setNewContactTelefono('')
+    setNewContactPhone('')
   }
 
   return (
     <div>
-      <AddContactForm setNewContactName={setNewContactName} setNewContactEmail={setNewContactEmail} setNewContactTelefono={setNewContactTelefono}/>
-      <button onClick={addContact}>Add Contact</button>
+      <AddContactForm newContact={{newContactName, newContactEmail, newContactPhone, setNewContactName, setNewContactEmail, setNewContactPhone}}/>
+      <button onClick={add}>Add Contact</button>
     </div>
   );
 }
